@@ -3,22 +3,366 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Título de tu página</title>
+    <title>Daniel Cabañas - Inspiración Lacoste</title>
     <style>
+        /* Variables de color estilo Lacoste */
+        :root {
+            --lacoste-green: #004526; /* El icónico verde oscuro */
+            --lacoste-red: #e02a27;
+            --light-grey: #f4f4f4;
+            --dark-text: #222222;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+
         body {
-            background-color: pink;
-            color: white;
+            background-color: #ffffff;
+            color: var(--dark-text);
+        }
+
+        /* --- BARRA DE ANUNCIOS SUPERIOR --- */
+        .promo-bar {
+            background-color: var(--light-grey);
+            text-align: center;
+            padding: 10px;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #555;
+        }
+
+        /* --- CABECERA PRINCIPAL --- */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background-color: #fff;
+            border-bottom: 1px solid #ebebeb;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-left, .header-right {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            flex: 1;
+        }
+
+        .header-right {
+            justify-content: flex-end;
+            font-size: 18px;
+        }
+
+        /* Navegación principal */
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--dark-text);
+            font-weight: 700;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--lacoste-green);
+        }
+
+        /* Logotipo Central */
+        .logo {
+            flex: 1;
+            text-align: center;
+            font-size: 28px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--lacoste-green);
+        }
+
+        /* --- SECCIÓN HERO (Vídeo a pantalla completa con texto superpuesto) --- */
+        .hero {
+            position: relative;
+            width: 100%;
+            height: 80vh; /* Ocupa el 80% del alto de la pantalla */
+            background-color: #000;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Contenedor del iframe para que cubra todo el fondo */
+        .hero iframe {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100vw;
+            height: 56.25vw; /* 16:9 ratio */
+            min-height: 100vh;
+            min-width: 177.77vh; /* 16:9 ratio */
+            transform: translate(-50%, -50%);
+            pointer-events: none; /* Evita que el usuario pause el vídeo sin querer al hacer clic */
+            opacity: 0.7; /* Oscurece un poco el vídeo para que el texto se lea bien */
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            color: #fff;
+        }
+
+        .hero-content h1 {
+            font-size: 48px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background-color: #fff;
+            color: var(--dark-text);
+            text-decoration: none;
+            padding: 15px 40px;
+            font-size: 13px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--lacoste-green);
+            color: #fff;
+        }
+
+        /* --- SECCIÓN DE PRODUCTOS --- */
+        .section-title {
+            text-align: center;
+            margin: 80px 0 40px;
+            font-size: 26px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            padding: 0 50px 80px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .product-card {
+            cursor: pointer;
+        }
+
+        .product-image {
+            background-color: var(--light-grey);
+            aspect-ratio: 3/4; /* Proporción típica de moda */
+            margin-bottom: 20px;
+            position: relative;
+            transition: opacity 0.3s;
+        }
+
+        .product-card:hover .product-image {
+            opacity: 0.8;
+        }
+
+        /* Pequeña etiqueta de "Nuevo" */
+        .badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background-color: var(--lacoste-green);
+            color: #fff;
+            font-size: 10px;
+            padding: 5px 10px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .colors {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .color-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 1px solid #ccc;
+        }
+
+        .product-card h3 {
+            font-size: 14px;
+            font-weight: normal;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .product-card p {
+            font-size: 15px;
+            font-weight: bold;
+            color: #000;
+        }
+
+        /* --- PIE DE PÁGINA --- */
+        footer {
+            background-color: var(--light-grey);
+            padding: 60px 50px;
+            text-align: center;
+            border-top: 1px solid #ddd;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .footer-links a {
+            color: #555;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer-links a:hover {
+            color: var(--lacoste-green);
+        }
+
+        .copyright {
+            font-size: 11px;
+            color: #888;
         }
     </style>
 </head>
 <body>
 
-    <h1>Hola Mundo</h1>
-    <h2>Daniel Cabañas Galisteo</h2>
-    <p>Aquí va el contenido visible de tu sitio web.</p>
+    <!-- BARRA PROMOCIONAL -->
+    <div class="promo-bar">
+        Devoluciones gratuitas en todos los pedidos · Envío estándar gratis desde 99€
+    </div>
 
-    <!-- Código para incrustar el vídeo de YouTube -->
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/cL09ZoSr0uQ" title="Reproductor de video de YouTube" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    <!-- CABECERA -->
+    <header>
+        <div class="header-left">
+            <nav>
+                <ul>
+                    <li><a href="#">Hombre</a></li>
+                    <li><a href="#">Mujer</a></li>
+                    <li><a href="#">Niños</a></li>
+                    <li><a href="#">Polos</a></li>
+                </ul>
+            </nav>
+        </div>
+        
+        <div class="logo">Cabañas</div>
+        
+        <div class="header-right">
+            <span style="cursor:pointer; font-size: 16px;">🔍</span>
+            <span style="cursor:pointer; font-size: 16px;">👤</span>
+            <span style="cursor:pointer; font-size: 16px;">🛒</span>
+        </div>
+    </header>
+
+    <!-- SECCIÓN HERO CON VÍDEO DE FONDO TIPO CAMPAÑA -->
+    <section class="hero">
+        <!-- El parámetro autoplay=1 y mute=1 hace que el vídeo se reproduzca solo al entrar, como en Lacoste -->
+        <iframe src="https://www.youtube.com/embed/cG1M128Vjhw?autoplay=1&mute=1&loop=1&controls=0&showinfo=0&playlist=cG1M128Vjhw" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+        
+        <div class="hero-content">
+            <h1>Colección Otoño-Invierno</h1>
+            <a href="#" class="btn-primary">Comprar la colección</a>
+        </div>
+    </section>
+
+    <!-- CATÁLOGO DE PRODUCTOS -->
+    <h2 class="section-title">Los Icónicos</h2>
+    
+    <div class="product-grid">
+        <!-- Producto 1 -->
+        <div class="product-card">
+            <div class="product-image">
+                <span class="badge">Nuevo</span>
+            </div>
+            <div class="colors">
+                <div class="color-dot" style="background-color: #004526;"></div>
+                <div class="color-dot" style="background-color: #ffffff;"></div>
+                <div class="color-dot" style="background-color: #000000;"></div>
+            </div>
+            <h3>Polo L.12.12 Classic Fit en piqué de algodón</h3>
+            <p>110,00 €</p>
+        </div>
+
+        <!-- Producto 2 -->
+        <div class="product-card">
+            <div class="product-image"></div>
+            <div class="colors">
+                <div class="color-dot" style="background-color: #e02a27;"></div>
+                <div class="color-dot" style="background-color: #1a1a1a;"></div>
+            </div>
+            <h3>Sudadera con cuello redondo y logo bordado</h3>
+            <p>130,00 €</p>
+        </div>
+
+        <!-- Producto 3 -->
+        <div class="product-card">
+            <div class="product-image"></div>
+            <div class="colors">
+                <div class="color-dot" style="background-color: #ffffff;"></div>
+            </div>
+            <h3>Zapatillas de piel L-Spin Deluxe</h3>
+            <p>125,00 €</p>
+        </div>
+        
+        <!-- Producto 4 -->
+        <div class="product-card">
+            <div class="product-image"></div>
+            <div class="colors">
+                <div class="color-dot" style="background-color: #004526;"></div>
+                <div class="color-dot" style="background-color: #add8e6;"></div>
+            </div>
+            <h3>Chaqueta cortavientos resistente al agua</h3>
+            <p>195,00 €</p>
+        </div>
+    </div>
+
+    <!-- PIE DE PÁGINA -->
+    <footer>
+        <div class="footer-links">
+            <a href="#">Ayuda y Contactos</a>
+            <a href="#">Envíos y Devoluciones</a>
+            <a href="#">Nuestra Historia</a>
+            <a href="#">Localizador de Tiendas</a>
+        </div>
+        <p class="copyright">&copy; 2026 DANIEL CABAÑAS GALISTEO. TODOS LOS DERECHOS RESERVADOS.</p>
+    </footer>
 
 </body>
 </html>
