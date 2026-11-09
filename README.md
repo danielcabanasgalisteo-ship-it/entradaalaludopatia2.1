@@ -1,2 +1,2 @@
 # entradaalaludopatia2.1
-proyecto para mi tfg
+estoy haciendo un repositorio para mi proyecto de mi pagina web sobre la ludopatia infantil
